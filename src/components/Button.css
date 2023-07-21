@@ -1,0 +1,18 @@
+.btn {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.1rem;
+    padding: 0.65rem;
+    border-radius: 12rem;
+    outline: none;
+    border: none;
+    background-color: yellow;
+  }
+  
+  .btn.grey {
+    background-color: #cec8d1;
+  }
+  
+  .btn.small {
+    font-size: 0.5rem;
+  }
