@@ -4,68 +4,67 @@
   background: linear-gradient(
     180deg,
     rgba(53, 51, 204, 1) 0%,
-    rgba(3, 4, 46, 1) 100%
+    #000123 100%
   );
 
   display: flex;
   align-items: center;
   gap: 8rem;
-  padding: 1rem;
+  padding: 2rem; 
 }
 
 .top-header_logo-wrapper {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem; 
   padding-left: 1rem;
 }
 
 .logo-wrapper_logo {
-  width: 4.2rem; /* Ajusta el tamaño del logo según tus necesidades */
-  height: auto; /* Mantiene la proporción del logo */
+  width: 4.2rem; 
+  height: auto; 
 }
 
 .top-header_buttons-wrapper {
   margin-left: auto;
   display: flex;
-  gap: 1.5rem; /* Ajusta la distancia horizontal entre los botones */
+  gap: 1.5rem; 
 }
 
 .logo-wrapper_text {
-  font-size: 1.5rem;
+  font-size: 2rem; 
   padding-left: 0.5rem;
 }
 
-/* Estilos para el icono de la billetera */
+
 .wallet-icon {
   display: inline-flex;
   align-items: center;
-  margin-right: 0.9rem; /* Espacio entre el icono y el texto del botón */
-  width: 2.7rem; /* Ajusta el ancho del icono según el tamaño deseado */
-  height: 2.7rem; /* Ajusta la altura del icono según el tamaño deseado */
+  margin-right: 0.9rem; 
+  width: 3rem; 
+  height: 3rem; 
 }
 
 .wallet-icon-img {
-  width: 100%; /* Ajusta el tamaño de la imagen de la billetera para que ocupe todo el espacio disponible */
-  height: auto; /* Mantiene la proporción del icono */
+  width: 100%; 
+  height: auto; 
 }
 
 .wallet-button {
-  font-size: 1rem;
+  font-size: 1.2rem; 
   font-weight: 700;
   letter-spacing: 0.1rem;
-  padding: 0.3rem 1.5rem; /* Ajusta el padding del botón para hacerlo más estrecho y alargado */
+  padding: 0.5rem 1.5rem; 
   border-radius: 12rem;
   outline: none;
   border: none;
   background-color: yellow;
   display: flex;
   align-items: center;
-  margin-right: 1rem; /* Ajusta la distancia entre el botón de la billetera y el botón del componente Button */
+  margin-right: 1rem; 
 }
 
 .wallet-button.connected {
-  /* Estilos para el botón de la billetera cuando está conectado... */
   color: rgb(0, 0, 0);
-  font-size: 1.2rem;
+  font-size: 1.4rem; 
 }

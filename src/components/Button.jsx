@@ -1,11 +1,11 @@
 import React from "react";
 import "./Button.css";
 
-const Button = ({ children, text, handleClick, grey, small, disabled, account }) => {
+const Button = ({ children, text, handleClick, grey, big, disabled, account }) => {
   const isConnected = !!account; // Comprobar wallet conectada
   return (
     <button
-      className={`btn ${grey && "grey"} ${small && "small"} ${isConnected ? "connected" : ""}`}
+      className={`btn ${grey && "grey"} ${big && "big"} ${isConnected ? "connected" : ""}`}
       onClick={handleClick}
       disabled={disabled}
     >
