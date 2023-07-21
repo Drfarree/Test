@@ -7,6 +7,7 @@
     outline: none;
     border: none;
     background-color: yellow;
+    
   }
   
   .btn.grey {
@@ -16,3 +17,10 @@
   .btn.small {
     font-size: 0.5rem;
   }
+
+  /* Estilos cuando el botón esté conectado */
+  .btn.connected {
+    color: rgb(0, 0, 0);
+  }
+
+  
