@@ -1,4 +1,5 @@
 .menu-bg {
+    padding-right: 40px;
     background: rgb(53, 51, 204);
     background: linear-gradient(
       180deg,
@@ -10,4 +11,21 @@
     align-items: center;
     /* gap: 8rem; */
     /* padding: 2rem;  */
+  }
+
+  .btn {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.1rem;
+    padding: 0.65rem;
+    border-radius: 12rem;
+    outline: none;
+    border: none;
+    background-color: yellow;
+    cursor: pointer;
+    
+  }
+
+  .btn.grey {
+    background-color: #cec8d1;
   }
