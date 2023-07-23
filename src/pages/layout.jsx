@@ -1,9 +1,11 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 
+import "./styles.css"
+
 const Navigation = () => (
-  <section class="w-full px-8 text-gray-700 bg-white">
-    <div class="container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl">
+  <section class="w-full px-8 text-gray-700 bg-white" className="menu-bg">
+    <div class="container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl" >
       <div class="relative flex flex-col md:flex-row">
         <a
           href="#_"

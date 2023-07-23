@@ -1,0 +1,13 @@
+.menu-bg {
+    background: rgb(53, 51, 204);
+    background: linear-gradient(
+      180deg,
+      rgba(53, 51, 204, 1) 0%,
+      #000123 100%
+    );
+  
+    display: flex;
+    align-items: center;
+    /* gap: 8rem; */
+    /* padding: 2rem;  */
+  }
