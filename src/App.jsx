@@ -1,9 +1,24 @@
-import {Home} from "./pages";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+
+// import { Home, Services} from "./pages"
+import { Layout } from "./pages/layout";
+import Home from "./pages/Home/Home";
+import Services from "./pages/Services/Services";
+
 
 function App() {
   return (
     <>
-      <Home />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="/services" element={<Services />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
