@@ -8,14 +8,14 @@ import { Network } from "../components/Buttons/Network";
 const Navigation = () => (
   <section class="w-full px-8 text-gray-700 bg-white" className="menu-bg">
     <div class="container flex flex-col flex-wrap items-center justify-between py-3 mx-auto md:flex-row max-w-full">
-      <div class="relative flex flex-col md:flex-row">
+      <div class="relative flex flex-col md:flex-row ml-10">
         <a
           href="#"
           class="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0"
         >
-          <img src={logo} width="20%" height="20%" />
+          <img src={logo} width="51px" height="54px" />
 
-          <span class="text-xl select-none text-white ml-5">
+          <span class="text-4xl select-none text-white ml-5">
             FED AI<span class="text-indigo-600">.</span>
           </span>
         </a>
@@ -72,7 +72,7 @@ const Navigation = () => (
                 : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00]"
             }
           >
-            INFORMACION
+            INFORMACIÓN
           </NavLink>
 
           <a
