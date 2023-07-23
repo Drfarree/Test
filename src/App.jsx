@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "./pages/layout";
 import Home from "./pages/Home/Home";
 import Services from "./pages/Services/Services";
+import Information from "./pages/Information/Information";
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="/services" element={<Services />} />
+            <Route path="/information" element={<Information />} />
           </Route>
         </Routes>
       </BrowserRouter>
