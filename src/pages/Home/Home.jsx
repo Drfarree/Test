@@ -1,32 +1,37 @@
-import Header from "./components/Header/Header";
-import FirstInfo from "./components/FirstInfo/FirstInfo";
-
-import "./styles.css"
+import { Link } from "react-router-dom";
+import "./styles.css";
 import IAhand from "../../assets/IAhand.png";
 
 const Home = () => {
   return (
     <>
-      <section class="px-2 py-32 bg-white md:px-0" style={{backgroundColor: "#000123"}}>
-        <div class="container items-center max-w-full px-8 mx-auto xl:px-5">
-          <div class="flex flex-wrap items-center sm:-mx-3">
-            <div class="md:w-1/2 md:px-3">
+      <section
+        class="px-2 py-20 bg-white md:px-0"
+        style={{ backgroundColor: "#000123" }}
+      >
+        <div class="container max-w-full px-8 mx-auto xl:px-5">
+          <div class="flex flex-wrap sm:-mx-3">
+            <div class="md:w-1/2 md:px-20">
               <div class="w-full pb-6 space-y-6 sm:max-w-md lg:max-w-full md:space-y-4 lg:space-y-8 xl:space-y-9 sm:pr-5 lg:pr-0 md:pb-0">
-                <h2 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-4xl lg:text-5xl xl:text-6xl">
+                <h2 class="text-4xl text-white sm:text-4xl md:text-2xl lg:text-3xl xl:text-4xl">
                   <span class="block xl:inline">MACHINE LEARNING</span>
                 </h2>
-                <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-4xl lg:text-5xl xl:text-6xl">
-                  <span class="block text-indigo-600 ">FEDERATED LEARNING</span>
+                <h1 class="text-4xl font-extrabold text-white sm:text-6xl md:text-5xl lg:text-6xl xl:text-7xl w-5">
+                  <span class="block text-white ">FEDERATED LEARNING</span>
                 </h1>
-                <p class="mx-auto text-base text-gray-500 sm:max-w-md lg:text-xl md:max-w-3xl">
-                Esta plataforma es una solución innovadora que permite entrenar modelos de inteligencia artificial de manera descentralizada. Mediante esta tecnología, los dispositivos individuales pueden colaborar en el proceso de entrenamiento sin compartir sus datos directamente.
+                <p class="text-base text-gray-500 sm:max-w-md lg:text-xl md:max-w-3xl">
+                  Esta plataforma es una solución innovadora que permite
+                  entrenar modelos de inteligencia artificial de manera
+                  descentralizada. Mediante esta tecnología, los dispositivos
+                  individuales pueden colaborar en el proceso de entrenamiento
+                  sin compartir sus datos directamente.
                 </p>
                 <div class="relative flex flex-col sm:flex-row sm:space-x-4">
-                  <a
-                    href="#_"
-                    class="flex items-center w-full px-6 py-3 mb-3 text-lg text-white bg-indigo-600 rounded-md sm:mb-0 hover:bg-indigo-700 sm:w-auto"
+                  <Link
+                    to="/information"
+                    className="flex items-center w-full px-6 py-3 mb-3 text-lg text-black bg-[#ffff00] rounded-full sm:mb-0 hover:bg-[#ffff00] sm:w-auto"
                   >
-                    Try It Free
+                    INFORMACIÓN
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       class="w-5 h-5 ml-1"
@@ -40,13 +45,13 @@ const Home = () => {
                       <line x1="5" y1="12" x2="19" y2="12"></line>
                       <polyline points="12 5 19 12 12 19"></polyline>
                     </svg>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
             <div class="w-full md:w-1/2">
               <div class="w-full h-auto overflow-hidden rounded-md shadow-xl sm:rounded-xl">
-                <img src={IAhand} class="relative float-right"/>
+                <img src={IAhand} class="relative float-right" />
               </div>
             </div>
           </div>
