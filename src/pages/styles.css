@@ -29,3 +29,8 @@
   .btn.grey {
     background-color: #cec8d1;
   }
+
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+  

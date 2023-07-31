@@ -1,26 +1,30 @@
 import React from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
 import "./styles.css";
 import Connect from "../components/Buttons/Connect";
 import { Network } from "../components/Buttons/Network";
 
-const Navigation = () => (
-  <section class="w-full px-8 text-gray-700 bg-white" className="menu-bg">
-    <div class="container flex flex-col flex-wrap items-center justify-between py-3 mx-auto md:flex-row max-w-full">
-      <div class="relative flex flex-col md:flex-row ml-10">
-        <a
-          href="#"
-          class="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0"
-        >
-          <img src={logo} width="51px" height="54px" />
+const Navigation = () => {
+  const location = useLocation();
+  const isServices = location.pathname.includes("/services");
 
-          <span class="text-4xl select-none text-white ml-5">
-            FED AI<span class="text-indigo-600">.</span>
-          </span>
-        </a>
+  return (
+    <section class="w-full px-8 text-gray-700 bg-white" className="menu-bg">
+      <div class="container flex flex-col flex-wrap items-center justify-between py-3 mx-auto md:flex-row max-w-full">
+        <div class="relative flex flex-col md:flex-row ml-10">
+          <a
+            href="#"
+            class="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0"
+          >
+            <img src={logo} width="51px" height="54px" />
 
-        {/* <a
+            <span class="text-4xl select-none text-white ml-5">
+              FED AI<span class="text-indigo-600">.</span>
+            </span>
+          </a>
+
+          {/* <a
           class="group text-pink-500 transition-all duration-300 ease-in-out"
           href="#"
         >
@@ -43,18 +47,19 @@ const Navigation = () => (
           </NavLink>
         */}
 
-        <nav class="flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8 md:border-gray-200">
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              isActive
-                ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4"
-                : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00]"
-            }
-          >
-            INICIO
-          </NavLink>
-          <NavLink
+          <nav class="flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8 md:border-gray-200">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                isActive
+                  ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4"
+                  : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00]"
+              }
+            >
+              INICIO
+            </NavLink>
+
+            {/* <NavLink
             to="/services"
             className={({ isActive }) =>
               isActive
@@ -63,34 +68,101 @@ const Navigation = () => (
             }
           >
             SERVICIOS
-          </NavLink>
-          <NavLink
-            to="/information"
-            className={({ isActive }) =>
-              isActive
-                ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4"
-                : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00]"
-            }
-          >
-            INFORMACIÓN
-          </NavLink>
+          </NavLink> */}
+            <NavLink
+              to="/information"
+              className={({ isActive }) =>
+                isActive
+                  ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4"
+                  : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00]"
+              }
+            >
+              INFORMACIÓN
+            </NavLink>
 
-          <a
-            href="#_"
-            class="mr-5 font-medium leading-6 text-white hover:text-yellow-200"
-          >
-            SWAP
-          </a>
-        </nav>
-      </div>
+            <a
+              href="#_"
+              class="mr-5 font-medium leading-6 text-white hover:text-yellow-200"
+            >
+              SWAP
+            </a>
+            {/* <div class="p-10"> */}
+            <div class="dropdown inline-block relative">
+              <button
+                className={
+                  isServices
+                    ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4 inline-flex"
+                    : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00] inline-flex md:hover:text-[#ffff00]"
+                }
+              >
+                <span
+                  className={
+                    isServices
+                      ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4"
+                      : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00] "
+                  }
+                >
+                  SERVICIOS
+                </span>
+                <svg
+                  class="fill-current h-5 w-5 mt-[2px] -ml-3"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />{" "}
+                </svg>
+              </button>
+              <ul class="dropdown-menu absolute hidden pt-1 bg-transparent">
+                <li class="mt-3">
+                  <NavLink
+                    to="/services/training"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4"
+                        : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00]"
+                    }
+                  >
+                    TRAINING
+                  </NavLink>
+                </li>
+                <li class="mt-3">
+                  <NavLink
+                    to="/services/inference"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4"
+                        : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00]"
+                    }
+                  >
+                    INFERENCE
+                  </NavLink>
+                </li>
+                <li class="mt-3">
+                  <NavLink
+                    to="/services/mdk"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4"
+                        : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00]"
+                    }
+                  >
+                    MDK
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
+            {/* </div> */}
+          </nav>
+        </div>
 
-      <div class="inline-flex items-center ml-5 space-x-6 lg:justify-end">
-        <Network />
-        <Connect />
+        <div class="inline-flex items-center ml-5 space-x-6 lg:justify-end">
+          <Network />
+          <Connect />
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const Footer = () => (
   <section class="bg-white">
