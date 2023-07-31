@@ -1,7 +1,7 @@
 const Services = () => {
   return (
     <>
-      <section class="px-2 py-32 bg-white md:px-0">
+      <section class="px-2 py-32 bg-white md:px-0" style={{ backgroundColor: "#000123" }}>
         <div class="container items-center max-w-6xl px-8 mx-auto xl:px-5">
           <div class="flex flex-wrap items-center sm:-mx-3">
             <div class="w-full md:w-1/2 md:px-3">
