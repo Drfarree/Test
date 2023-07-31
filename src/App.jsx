@@ -18,6 +18,9 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/services" element={<Services />} />
             <Route path="/information" element={<Information />} />
+            <Route path="/services/training" element={<Information />} />
+            <Route path="/services/inference" element={<Information />} />
+            <Route path="/services/mdk" element={<Information />} />         
           </Route>
         </Routes>
       </BrowserRouter>
