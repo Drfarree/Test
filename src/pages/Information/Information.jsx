@@ -1,7 +1,7 @@
 const Information = () => {
   return (
     <>
-    <section class="flex items-center justify-center py-20 bg-white min-w-screen">
+    <section class="flex items-center justify-center py-20 bg-white min-w-screen " style={{ backgroundColor: "#000123" }}>
       <div class="px-16 bg-white">
         <div class="container flex flex-col items-start mx-auto lg:items-center">
           <p class="relative flex items-start justify-start w-full text-lg font-bold tracking-wider text-purple-500 uppercase lg:justify-center lg:items-center">
