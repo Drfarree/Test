@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import "./styles.css";
 import IAhand from "../../assets/IAhand.png";
+import ButtonServiceRedirect from "../../components/Buttons/ButtonServiceRedirect";
 
 const Home = () => {
   return (
@@ -19,7 +20,7 @@ const Home = () => {
                 <h1 class="text-4xl font-extrabold text-white sm:text-6xl md:text-5xl lg:text-6xl xl:text-7xl w-5">
                   <span class="block text-white ">FEDERATED LEARNING</span>
                 </h1>
-                <p class="text-base text-gray-500 sm:max-w-md lg:text-2xl md:max-w-3xl">
+                <p class="text-base text-gray-500 sm:max-w-md lg:text-2xl md:max-w-3xl text-justify">
                   Esta plataforma es una solución innovadora que permite
                   entrenar modelos de inteligencia artificial de manera
                   descentralizada. Mediante esta tecnología, los dispositivos
@@ -69,7 +70,7 @@ const Home = () => {
 
           <div class="box-border order-first w-full text-black border-solid md:w-1/2 md:pl-10 md:order-none">
             <h2 class="m-0 text-xl font-semibold leading-tight border-0 border-gray-300 lg:text-3xl md:text-2xl">
-              Boost Productivity
+              Training
             </h2>
             <p class="pt-4 pb-8 m-0 leading-7 text-gray-700 border-0 border-gray-300 sm:pr-12 xl:pr-32 lg:text-lg">
               Build an atmosphere that creates productivity in your organization
@@ -95,12 +96,13 @@ const Home = () => {
                 Learn the top techniques
               </li>
             </ul>
+            <ButtonServiceRedirect textButton="Training Service" redirectTo="/services/training" />
           </div>
         </div>
         <div class="box-border flex flex-col items-center content-center px-8 mx-auto mt-2 leading-6 text-black border-0 border-gray-300 border-solid md:mt-20 xl:mt-0 md:flex-row max-w-7xl lg:px-16">
           <div class="box-border w-full text-black border-solid md:w-1/2 md:pl-6 xl:pl-32">
             <h2 class="m-0 text-xl font-semibold leading-tight border-0 border-gray-300 lg:text-3xl md:text-2xl">
-              Automated Tasks
+              Inference
             </h2>
             <p class="pt-4 pb-8 m-0 leading-7 text-gray-700 border-0 border-gray-300 sm:pr-10 lg:text-lg">
               Save time and money with our revolutionary services. We are the
@@ -126,8 +128,8 @@ const Home = () => {
                 Some awesome integrations
               </li>
             </ul>
+            <ButtonServiceRedirect textButton="Inference Service" redirectTo="/services/inference" />
           </div>
-
           <div class="box-border relative w-full max-w-md px-4 mt-10 mb-4 text-center bg-no-repeat bg-contain border-solid md:mt-0 md:max-w-none lg:mb-0 md:w-1/2">
             <img
               src="https://cdn.devdojo.com/images/december2020/settings.png"
