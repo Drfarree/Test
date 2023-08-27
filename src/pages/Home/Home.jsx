@@ -20,7 +20,7 @@ const Home = () => {
                 <h1 class="text-4xl font-extrabold text-white sm:text-6xl md:text-5xl lg:text-6xl xl:text-7xl w-5">
                   <span class="block text-white ">FEDERATED LEARNING</span>
                 </h1>
-                <p class="text-base text-gray-500 sm:max-w-md lg:text-2xl md:max-w-3xl text-justify">
+                <p class="text-base text-justify text-gray-500 sm:max-w-md lg:text-2xl md:max-w-3xl">
                   Esta plataforma es una solución innovadora que permite
                   entrenar modelos de inteligencia artificial de manera
                   descentralizada. Mediante esta tecnología, los dispositivos

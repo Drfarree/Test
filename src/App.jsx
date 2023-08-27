@@ -7,6 +7,7 @@ import { Layout } from "./pages/layout";
 import Home from "./pages/Home/Home";
 import Services from "./pages/Services/Services";
 import Information from "./pages/Information/Information";
+import Mdk from "./pages/MDK/Mdk";
 
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
             <Route path="/information" element={<Information />} />
             <Route path="/services/training" element={<Information />} />
             <Route path="/services/inference" element={<Information />} />
-            <Route path="/services/mdk" element={<Information />} />         
+            <Route path="/services/mdk" element={<Mdk />} />         
           </Route>
         </Routes>
       </BrowserRouter>
