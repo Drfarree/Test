@@ -10,14 +10,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.2.5",
     "@jupyterlab/apputils": "^4.1.3",
     "@jupyterlab/services": "^7.0.3",
     "@uniswap/widgets": "^2.53.1",
+    "antd": "^5.8.5",
     "ethers": "^5.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.2",
-    "react-router-dom": "^6.14.2"
+    "react-router-dom": "^6.14.2",
+    "viem": "^1.9.0",
+    "wagmi": "^1.3.10"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
