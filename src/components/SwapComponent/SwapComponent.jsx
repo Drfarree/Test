@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Input, Popover, Radio, Modal, message } from "antd";
+import { Input, Modal, message } from "antd";
 import {
     ArrowDownOutlined,
     DownOutlined,
-    SettingOutlined,
 } from "@ant-design/icons";
-// import tokenList from "../tokenList.json";
 import axios from "axios";
 // import { useSendTransaction, useWaitForTransaction } from "wagmi";
 
@@ -32,7 +30,7 @@ function SwapComponent(props) {
     const [tokenTwoAmount, setTokenTwoAmount] = useState(null);
     const [tokenOne, setTokenOne] = useState(tokenList[0]);
     const [tokenTwo, setTokenTwo] = useState(tokenList[1]);
-    const [isOpen, setIsOpen] = useState(false);
+    const [isSwapTokenModalOpen, setSwapTokenModalOpen] = useState(false);
     const [changeToken, setChangeToken] = useState(1);
     const [prices, setPrices] = useState(null);
     const [txDetails, setTxDetails] = useState({
@@ -80,7 +78,7 @@ function SwapComponent(props) {
 
     function openModal(asset) {
         setChangeToken(asset);
-        setIsOpen(true);
+        setSwapTokenModalOpen(true);
     }
 
     function modifyToken(i) {
@@ -94,7 +92,7 @@ function SwapComponent(props) {
             setTokenTwo(tokenList[i]);
             fetchPrices(tokenOne.address, tokenList[i].address)
         }
-        setIsOpen(false);
+        setSwapTokenModalOpen(false);
     }
 
     async function fetchPrices(one, two) {
@@ -134,9 +132,7 @@ function SwapComponent(props) {
 
 
     useEffect(() => {
-
         fetchPrices(tokenList[0].address, tokenList[1].address)
-
     }, [])
 
     useEffect(() => {
@@ -179,48 +175,38 @@ function SwapComponent(props) {
 
     // }, [isSuccess])
 
-
-    // const settings = (
-    //     <>
-    //         <div>Slippage Tolerance</div>
-    //         <div>
-    //             <Radio.Group value={slippage} onChange={handleSlippageChange}>
-    //                 <Radio.Button value={0.5}>0.5%</Radio.Button>
-    //                 <Radio.Button value={2.5}>2.5%</Radio.Button>
-    //                 <Radio.Button value={5}>5.0%</Radio.Button>
-    //             </Radio.Group>
-    //         </div>
-    //     </>
-    // );
+    const SwapTokenModal = (
+        <Modal
+            open={isSwapTokenModalOpen}
+            footer={null}
+            onCancel={() => setSwapTokenModalOpen(false)}
+            title="Select a token"
+        >
+            <div class="border-t-[1px]  border-solid border-[#363e54] mt-[20px] flex flex-col gap-[10px]">
+                {tokenList?.map((e, i) => {
+                    return (
+                        <div
+                            class="flex justify-start items-center pl-[20px] pt-[10px] pb-[10px] hover:cursor-pointer hover:bg-[#1f2639]"
+                            key={i}
+                            onClick={() => modifyToken(i)}
+                        >
+                            <img src={e.img} alt={e.ticker} class="h-[22px]  ml-[5px]" />
+                            <div className="tokenChoiceNames">
+                                <div class="ml-[10px] text-[16px] font-medium">{e.name}</div>
+                                <div class="ml-[10px] text-[13px] font-light text-[#51596f]">{e.ticker}</div>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        </Modal>
+    )
 
     return (
-        <div class="md:mt-[150px] md:mb-[150px] mt-[40px] mb-[40px] mr-6 ml-6 max-w-[400px] min-w-[200px]">
+        <>
             {contextHolder}
-            <Modal
-                open={isOpen}
-                footer={null}
-                onCancel={() => setIsOpen(false)}
-                title="Select a token"
-            >
-                <div class="border-t-[1px]  border-solid border-[#363e54] mt-[20px] flex flex-col gap-[10px]">
-                    {tokenList?.map((e, i) => {
-                        return (
-                            <div
-                                class="flex justify-start items-center pl-[20px] pt-[10px] pb-[10px] hover:cursor-pointer hover:bg-[#1f2639]"
-                                key={i}
-                                onClick={() => modifyToken(i)}
-                            >
-                                <img src={e.img} alt={e.ticker} class="h-[22px]  ml-[5px]" />
-                                <div className="tokenChoiceNames">
-                                    <div class="ml-[10px] text-[16px] font-medium">{e.name}</div>
-                                    <div class="ml-[10px] text-[13px] font-light text-[#51596f]">{e.ticker}</div>
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
-            </Modal>
-            <div class=" bg-[#0E111B] border-solid border-2 border-[#21273a] min-w-[200px] rounded-[15px] flex flex-col justify-start items-start pl-[30px] pr-[30px]">
+            {SwapTokenModal}
+            <div class="flex flex-col justify-start items-start pl-[30px] pr-[30px]">
                 <h1 class="m-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white uppercase"><span class="text-[35px] font-[650]">S</span>wap</h1>
                 <div class="relative">
                     <Input
@@ -246,7 +232,7 @@ function SwapComponent(props) {
                 </div>
                 <div class="swapButton" disabled={!tokenOneAmount || !isConnected} onClick={fetchDexSwap}>Swap</div>
             </div>
-        </div>
+        </>
     );
 }
 

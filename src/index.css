@@ -131,9 +131,10 @@
 }
 
 .ant-modal {
-  border: 1px solid #363e54;
+  border: 3px solid #363e54;
   width: 400px !important;
   border-radius: 10px;
+  padding-bottom: 0px;
 }
 
 .ant-modal-header {

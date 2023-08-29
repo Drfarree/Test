@@ -4,6 +4,8 @@ import logo from "../assets/logo.png";
 import "./styles.css";
 import Connect from "../components/Buttons/Connect";
 import { Network } from "../components/Buttons/Network";
+import SwapButton from "../components/Buttons/SwapButton";
+
 
 const Navigation = () => {
   const location = useLocation();
@@ -299,6 +301,9 @@ const Footer = () => (
 
 export const Layout = () => (
   <>
+
+    <SwapButton />
+
     <Navigation />
 
     <Outlet />
