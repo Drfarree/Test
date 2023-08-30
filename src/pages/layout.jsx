@@ -12,25 +12,25 @@ const Navigation = () => {
   const isServices = location.pathname.includes("/services");
 
   return (
-    <section class="w-full px-8 text-gray-700 bg-white" className="menu-bg">
-      <div class="container flex flex-col flex-wrap items-center justify-between py-3 mx-auto md:flex-row max-w-full">
-        <div class="relative flex flex-col md:flex-row ml-10">
+    <section className="w-full px-8 text-gray-700 bg-white" className="menu-bg">
+      <div className="container flex flex-col flex-wrap items-center justify-between py-3 mx-auto md:flex-row max-w-full">
+        <div className="relative flex flex-col md:flex-row ml-10">
           <a
             href="#"
-            class="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0"
+            className="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0"
           >
             <img src={logo} width="51px" height="54px" />
 
-            <span class="text-4xl select-none text-white ml-5">
-              FED AI<span class="text-indigo-600">.</span>
+            <span className="text-4xl select-none text-white ml-5">
+              FED AI<span className="text-indigo-600">.</span>
             </span>
           </a>
 
           {/* <a
-          class="group text-pink-500 transition-all duration-300 ease-in-out"
+          className="group text-pink-500 transition-all duration-300 ease-in-out"
           href="#"
         >
-          <span class="bg-left-bottom bg-gradient-to-r from-pink-500 to-pink-500 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
+          <span className="bg-left-bottom bg-gradient-to-r from-pink-500 to-pink-500 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
             This text gets 'underlined' on hover
           </span>
         </a> 
@@ -39,17 +39,17 @@ const Navigation = () => {
             className={({ isActive, isPending }) =>
               isPending ? "pending" : isActive ? "active" : ""
             }
-            class={
+            className={
               "mr-5 font-medium leading-6 text-white-600 hover:text-yellow-200 group transition-all duration-300 ease-in-out"
             }
           >
-            <span class="bg-left-bottom bg-gradient-to-r from-yellow-500 to-yellow-500 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
+            <span className="bg-left-bottom bg-gradient-to-r from-yellow-500 to-yellow-500 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
               INICIO
             </span>
           </NavLink>
         */}
 
-          <nav class="flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8 md:border-gray-200">
+          <nav className="flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8 md:border-gray-200">
             <NavLink
               to="/"
               className={({ isActive }) =>
@@ -91,8 +91,8 @@ const Navigation = () => {
             >
               Dashborad
             </NavLink>
-            {/* <div class="p-10"> */}
-            <div class="dropdown inline-block relative">
+            {/* <div className="p-10"> */}
+            <div className="dropdown inline-block relative">
               <button
                 className={
                   isServices
@@ -110,15 +110,15 @@ const Navigation = () => {
                   SERVICIOS
                 </span>
                 <svg
-                  class="fill-current h-5 w-5 mt-[2px] -ml-3"
+                  className="fill-current h-5 w-5 mt-[2px] -ml-3"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                 >
                   <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />{" "}
                 </svg>
               </button>
-              <ul class="dropdown-menu absolute hidden pt-1 bg-transparent">
-                <li class="mt-3">
+              <ul className="dropdown-menu absolute hidden pt-1 bg-transparent">
+                <li className="mt-3">
                   <NavLink
                     to="/services/training"
                     className={({ isActive }) =>
@@ -130,7 +130,7 @@ const Navigation = () => {
                     TRAINING
                   </NavLink>
                 </li>
-                <li class="mt-3">
+                <li className="mt-3">
                   <NavLink
                     to="/services/inference"
                     className={({ isActive }) =>
@@ -142,7 +142,7 @@ const Navigation = () => {
                     INFERENCE
                   </NavLink>
                 </li>
-                <li class="mt-3">
+                <li className="mt-3">
                   <NavLink
                     to="/services/mdk"
                     className={({ isActive }) =>
@@ -160,7 +160,7 @@ const Navigation = () => {
           </nav>
         </div>
 
-        <div class="inline-flex items-center ml-5 space-x-6 lg:justify-end">
+        <div className="inline-flex items-center ml-5 space-x-6 lg:justify-end">
           <Network />
           <Connect />
         </div>
@@ -170,63 +170,63 @@ const Navigation = () => {
 };
 
 const Footer = () => (
-  <section class="bg-white">
-    <div class="max-w-screen-xl px-4 py-12 mx-auto space-y-8 overflow-hidden sm:px-6 lg:px-8">
-      <nav class="flex flex-wrap justify-center -mx-5 -my-2">
-        <div class="px-5 py-2">
+  <section className="bg-white">
+    <div className="max-w-screen-xl px-4 py-12 mx-auto space-y-8 overflow-hidden sm:px-6 lg:px-8">
+      <nav className="flex flex-wrap justify-center -mx-5 -my-2">
+        <div className="px-5 py-2">
           <a
             href="#"
-            class="text-base leading-6 text-gray-500 hover:text-gray-900"
+            className="text-base leading-6 text-gray-500 hover:text-gray-900"
           >
             About
           </a>
         </div>
-        <div class="px-5 py-2">
+        <div className="px-5 py-2">
           <a
             href="#"
-            class="text-base leading-6 text-gray-500 hover:text-gray-900"
+            className="text-base leading-6 text-gray-500 hover:text-gray-900"
           >
             Blog
           </a>
         </div>
-        <div class="px-5 py-2">
+        <div className="px-5 py-2">
           <a
             href="#"
-            class="text-base leading-6 text-gray-500 hover:text-gray-900"
+            className="text-base leading-6 text-gray-500 hover:text-gray-900"
           >
             Team
           </a>
         </div>
-        <div class="px-5 py-2">
+        <div className="px-5 py-2">
           <a
             href="#"
-            class="text-base leading-6 text-gray-500 hover:text-gray-900"
+            className="text-base leading-6 text-gray-500 hover:text-gray-900"
           >
             Pricing
           </a>
         </div>
-        <div class="px-5 py-2">
+        <div className="px-5 py-2">
           <a
             href="#"
-            class="text-base leading-6 text-gray-500 hover:text-gray-900"
+            className="text-base leading-6 text-gray-500 hover:text-gray-900"
           >
             Contact
           </a>
         </div>
-        <div class="px-5 py-2">
+        <div className="px-5 py-2">
           <a
             href="#"
-            class="text-base leading-6 text-gray-500 hover:text-gray-900"
+            className="text-base leading-6 text-gray-500 hover:text-gray-900"
           >
             Terms
           </a>
         </div>
       </nav>
-      <div class="flex justify-center mt-8 space-x-6">
-        <a href="#" class="text-gray-400 hover:text-gray-500">
-          <span class="sr-only">Facebook</span>
+      <div className="flex justify-center mt-8 space-x-6">
+        <a href="#" className="text-gray-400 hover:text-gray-500">
+          <span className="sr-only">Facebook</span>
           <svg
-            class="w-6 h-6"
+            className="w-6 h-6"
             aria-hidden="true"
             fill="currentColor"
             viewBox="0 0 24 24"
@@ -238,10 +238,10 @@ const Footer = () => (
             ></path>
           </svg>
         </a>
-        <a href="#" class="text-gray-400 hover:text-gray-500">
-          <span class="sr-only">Instagram</span>
+        <a href="#" className="text-gray-400 hover:text-gray-500">
+          <span className="sr-only">Instagram</span>
           <svg
-            class="w-6 h-6"
+            className="w-6 h-6"
             aria-hidden="true"
             fill="currentColor"
             viewBox="0 0 24 24"
@@ -253,10 +253,10 @@ const Footer = () => (
             ></path>
           </svg>
         </a>
-        <a href="#" class="text-gray-400 hover:text-gray-500">
-          <span class="sr-only">Twitter</span>
+        <a href="#" className="text-gray-400 hover:text-gray-500">
+          <span className="sr-only">Twitter</span>
           <svg
-            class="w-6 h-6"
+            className="w-6 h-6"
             aria-hidden="true"
             fill="currentColor"
             viewBox="0 0 24 24"
@@ -264,10 +264,10 @@ const Footer = () => (
             <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
           </svg>
         </a>
-        <a href="#" class="text-gray-400 hover:text-gray-500">
-          <span class="sr-only">GitHub</span>
+        <a href="#" className="text-gray-400 hover:text-gray-500">
+          <span className="sr-only">GitHub</span>
           <svg
-            class="w-6 h-6"
+            className="w-6 h-6"
             aria-hidden="true"
             fill="currentColor"
             viewBox="0 0 24 24"
@@ -279,10 +279,10 @@ const Footer = () => (
             ></path>
           </svg>
         </a>
-        <a href="#" class="text-gray-400 hover:text-gray-500">
-          <span class="sr-only">Dribbble</span>
+        <a href="#" className="text-gray-400 hover:text-gray-500">
+          <span className="sr-only">Dribbble</span>
           <svg
-            class="w-6 h-6"
+            className="w-6 h-6"
             aria-hidden="true"
             fill="currentColor"
             viewBox="0 0 24 24"
@@ -295,7 +295,7 @@ const Footer = () => (
           </svg>
         </a>
       </div>
-      <p class="mt-8 text-base leading-6 text-center text-gray-400">
+      <p className="mt-8 text-base leading-6 text-center text-gray-400">
         © 2021 SomeCompany, Inc. All rights reserved.
       </p>
     </div>

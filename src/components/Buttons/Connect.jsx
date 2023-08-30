@@ -29,21 +29,21 @@ const Connect = () => {
   return (
     <button
       type="button"
-      class="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-black whitespace-no-wrap bg-[#ffff00] border border-transparent shadow-sm hover:bg-[#ffff00] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffff00] btn"
+      className="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-black whitespace-no-wrap bg-[#ffff00] border border-transparent shadow-sm hover:bg-[#ffff00] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffff00] btn"
       disabled={!!account}
       onClick={handleWallet}
     >
       {account ? (
         <>
           <WalletSVG />{" "}
-          <span class="ml-2">{`0x...${account.substring(
+          <span className="ml-2">{`0x...${account.substring(
             account.length - 8
           )}`}</span>{" "}
         </>
       ) : (
         <>
           <ConnectSVG />
-          <span class="ml-2">CONNECT WALLET</span>
+          <span className="ml-2">CONNECT WALLET</span>
         </>
       )}
     </button>

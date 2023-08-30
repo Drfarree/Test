@@ -1,7 +1,7 @@
 export const NetworkSVG = () => {
-    return (
-      <svg
-      class="w-7 h-6 mr-2 -ml-1 text-[#626890]"
+  return (
+    <svg
+      className="w-7 h-6 mr-2 -ml-1 text-[#626890]"
       aria-hidden="true"
       focusable="false"
       data-prefix="fab"
@@ -15,5 +15,5 @@ export const NetworkSVG = () => {
         d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"
       ></path>
     </svg>
-    );
-  };
+  );
+};

@@ -194,18 +194,18 @@ function SwapComponent(props) {
             onCancel={() => setSwapTokenModalOpen(false)}
             title="Select a token"
         >
-            <div class="border-t-[1px]  border-solid border-[#363e54] mt-[20px] flex flex-col gap-[10px]">
+            <div className="border-t-[1px]  border-solid border-[#363e54] mt-[20px] flex flex-col gap-[10px]">
                 {tokenList?.map((e, i) => {
                     return (
                         <div
-                            class="flex justify-start items-center pl-[20px] pt-[10px] pb-[10px] hover:cursor-pointer hover:bg-[#1f2639]"
+                            className="flex justify-start items-center pl-[20px] pt-[10px] pb-[10px] hover:cursor-pointer hover:bg-[#1f2639]"
                             key={i}
                             onClick={() => modifyToken(i)}
                         >
-                            <img src={e.img} alt={e.ticker} class="h-[22px]  ml-[5px]" />
+                            <img src={e.img} alt={e.ticker} className="h-[22px]  ml-[5px]" />
                             <div className="tokenChoiceNames">
-                                <div class="ml-[10px] text-[16px] font-medium">{e.name}</div>
-                                <div class="ml-[10px] text-[13px] font-light text-[#51596f]">{e.ticker}</div>
+                                <div className="ml-[10px] text-[16px] font-medium">{e.name}</div>
+                                <div className="ml-[10px] text-[13px] font-light text-[#51596f]">{e.ticker}</div>
                             </div>
                         </div>
                     );
@@ -218,9 +218,9 @@ function SwapComponent(props) {
         <>
             {contextHolder}
             {SwapTokenModal}
-            <div class="flex flex-col justify-start items-start pl-[30px] pr-[30px]">
-                <h1 class="m-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white uppercase"><span class="text-[35px] font-[650]">S</span>wap</h1>
-                <div class="relative">
+            <div className="flex flex-col justify-start items-start pl-[30px] pr-[30px]">
+                <h1 className="m-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white uppercase"><span className="text-[35px] font-[650]">S</span>wap</h1>
+                <div className="relative">
                     <Input
                         placeholder="0"
                         value={tokenOneAmount}
@@ -228,22 +228,22 @@ function SwapComponent(props) {
                         disabled={!prices}
                     />
                     <Input placeholder="0" value={tokenTwoAmount} />
-                    <div class="bg-[#3a4157] w-[35px] h-[35px] items-center justify-center flex rounded-[8px] absolute top-[80px] left-[45%] text-[#5F6783] border-[3px] border-solid  border-[#0E111B] text-[18px] duration-[0.3s] hover:text-white hover:cursor-pointer" onClick={switchTokens}>
+                    <div className="bg-[#3a4157] w-[35px] h-[35px] items-center justify-center flex rounded-[8px] absolute top-[80px] left-[45%] text-[#5F6783] border-[3px] border-solid  border-[#0E111B] text-[18px] duration-[0.3s] hover:text-white hover:cursor-pointer" onClick={switchTokens}>
                         <ArrowDownOutlined className=" switchArrow" />
                     </div>
-                    <div class="swapAsset top-[36px] right-[20px]" onClick={() => openModal(1)}>
-                        <img src={tokenOne.img} alt="assetOneLogo" class="h-[22px]  ml-[5px]" />
+                    <div className="swapAsset top-[36px] right-[20px]" onClick={() => openModal(1)}>
+                        <img src={tokenOne.img} alt="assetOneLogo" className="h-[22px]  ml-[5px]" />
                         {tokenOne.ticker}
                         <DownOutlined />
                     </div>
-                    <div class="swapAsset top-[135px] right-[20px]" onClick={() => openModal(2)}>
-                        <img src={tokenTwo.img} alt="assetOneLogo" class="h-[22px]  ml-[5px]" />
+                    <div className="swapAsset top-[135px] right-[20px]" onClick={() => openModal(2)}>
+                        <img src={tokenTwo.img} alt="assetOneLogo" className="h-[22px]  ml-[5px]" />
                         {tokenTwo.ticker}
                         <DownOutlined />
                     </div>
                 </div>
                 <div
-                    class="swapButton"
+                    className="swapButton"
                     disabled={!tokenOneAmount || !isWalletConnected}
                     onClick={fetchDexSwap}>Swap</div>
             </div>

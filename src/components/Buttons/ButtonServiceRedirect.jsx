@@ -12,7 +12,7 @@ const ButtonServiceRedirect = (props) => {
                 {textButton}
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="inline w-6 h-6 ml-1"
+                    className="inline w-6 h-6 ml-1"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
