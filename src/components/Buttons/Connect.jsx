@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { ConnectSVG } from "../../utils/ConnectSVG";
-import { ethers } from "ethers";
+import { Wallet, ethers } from "ethers";
 import { WalletSVG } from "../../utils/WalletSVG";
+import { getWalletAddress } from "../../utils/WalletUtils";
 
 const Connect = () => {
   const [account, setAccount] = useState("");
 
   const handleWallet = async () => {
     try {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      await provider.send("eth_requestAccounts", []);
-      const signer = provider.getSigner();
-      const address = await signer.getAddress();
+      const address = await getWalletAddress();
       setAccount(address);
     } catch (error) {
       console.error(error);

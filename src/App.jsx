@@ -9,6 +9,7 @@ import Services from "./pages/Services/Services";
 import Information from "./pages/Information/Information";
 import Mdk from "./pages/MDK/Mdk";
 import Training from "./pages/Services/Training";
+import DashboradPage from "./pages/Dashboard/DashboardPage";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
             <Route path="/services" element={<Services />} />
             <Route path="/information" element={<Information />} />
             <Route path="/services/training" element={<Training />} />
+            <Route path="/dashborad" element={<DashboradPage />} />
             <Route path="/services/inference" element={<Information />} />
             <Route path="/services/mdk" element={<Mdk />} />
           </Route>

@@ -6,16 +6,17 @@ import {
 } from "@ant-design/icons";
 import axios from "axios";
 // import { useSendTransaction, useWaitForTransaction } from "wagmi";
+import { getWalletAddress } from "../../utils/WalletUtils";
 
 const tokenList = [{
-    "ticker": "USDC",
+    "ticker": "ETH",
     "img": "https://cdn.moralis.io/eth/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
     "name": "USD Coin",
     "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
     "decimals": 6
 },
 {
-    "ticker": "LINK",
+    "ticker": "Token",
     "img": "https://cdn.moralis.io/eth/0x514910771af9ca656af840dff83e8264ecf986ca.png",
     "name": "Chainlink",
     "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
@@ -23,9 +24,9 @@ const tokenList = [{
 }]
 
 function SwapComponent(props) {
-    const { address, isConnected } = props;
     const [messageApi, contextHolder] = message.useMessage();
     const [slippage, setSlippage] = useState(2.5);
+    const [walletAddress, setWalletAddress] = useState();
     const [tokenOneAmount, setTokenOneAmount] = useState(null);
     const [tokenTwoAmount, setTokenTwoAmount] = useState(null);
     const [tokenOne, setTokenOne] = useState(tokenList[0]);
@@ -38,6 +39,7 @@ function SwapComponent(props) {
         data: null,
         value: null,
     });
+    let isWalletConnected = false;
 
     // const { data, sendTransaction } = useSendTransaction({
     //     request: {
@@ -59,7 +61,7 @@ function SwapComponent(props) {
     function changeAmount(e) {
         setTokenOneAmount(e.target.value);
         if (e.target.value && prices) {
-            setTokenTwoAmount((e.target.value * prices.ratio).toFixed(2))
+            setTokenTwoAmount((e.target.value * prices.ratio).toFixed(8))
         } else {
             setTokenTwoAmount(null);
         }
@@ -96,18 +98,19 @@ function SwapComponent(props) {
     }
 
     async function fetchPrices(one, two) {
+        //TODO: Change call
+        // const res = await axios.get(`http://localhost:3001/tokenPrice`, {
+        //     params: { addressOne: one, addressTwo: two }
+        // })
 
-        const res = await axios.get(`http://localhost:3001/tokenPrice`, {
-            params: { addressOne: one, addressTwo: two }
-        })
-
-
-        setPrices(res.data)
+        // TODO: Change 
+        // setPrices(res.data)
+        setPrices({ ratio: 0.001 })
     }
 
     async function fetchDexSwap() {
 
-        const allowance = await axios.get(`https://api.1inch.io/v5.0/1/approve/allowance?tokenAddress=${tokenOne.address}&walletAddress=${address}`)
+        const allowance = await axios.get(`https://api.1inch.io/v5.0/1/approve/allowance?tokenAddress=${tokenOne.address}&walletAddress=${walletAddress}`)
 
         if (allowance.data.allowance === "0") {
 
@@ -120,7 +123,7 @@ function SwapComponent(props) {
         }
 
         const tx = await axios.get(
-            `https://api.1inch.io/v5.0/1/swap?fromTokenAddress=${tokenOne.address}&toTokenAddress=${tokenTwo.address}&amount=${tokenOneAmount.padEnd(tokenOne.decimals + tokenOneAmount.length, '0')}&fromAddress=${address}&slippage=${slippage}`
+            `https://api.1inch.io/v5.0/1/swap?fromTokenAddress=${tokenOne.address}&toTokenAddress=${tokenTwo.address}&amount=${tokenOneAmount.padEnd(tokenOne.decimals + tokenOneAmount.length, '0')}&fromAddress=${walletAddress}&slippage=${slippage}`
         )
 
         let decimals = Number(`1E${tokenTwo.decimals}`)
@@ -130,6 +133,15 @@ function SwapComponent(props) {
 
     }
 
+    useEffect(() => {
+        const address = getWalletAddress()
+        if (address) {
+            setWalletAddress(address)
+            isWalletConnected = true;
+        }
+
+    }, [])
+
 
     useEffect(() => {
         fetchPrices(tokenList[0].address, tokenList[1].address)
@@ -137,7 +149,7 @@ function SwapComponent(props) {
 
     useEffect(() => {
 
-        if (txDetails.to && isConnected) {
+        if (txDetails.to && isWalletConnected) {
             sendTransaction();
         }
     }, [txDetails])
@@ -215,7 +227,7 @@ function SwapComponent(props) {
                         onChange={changeAmount}
                         disabled={!prices}
                     />
-                    <Input placeholder="0" value={tokenTwoAmount} disabled={true} />
+                    <Input placeholder="0" value={tokenTwoAmount} />
                     <div class="bg-[#3a4157] w-[35px] h-[35px] items-center justify-center flex rounded-[8px] absolute top-[80px] left-[45%] text-[#5F6783] border-[3px] border-solid  border-[#0E111B] text-[18px] duration-[0.3s] hover:text-white hover:cursor-pointer" onClick={switchTokens}>
                         <ArrowDownOutlined className=" switchArrow" />
                     </div>
@@ -230,7 +242,10 @@ function SwapComponent(props) {
                         <DownOutlined />
                     </div>
                 </div>
-                <div class="swapButton" disabled={!tokenOneAmount || !isConnected} onClick={fetchDexSwap}>Swap</div>
+                <div
+                    class="swapButton"
+                    disabled={!tokenOneAmount || !isWalletConnected}
+                    onClick={fetchDexSwap}>Swap</div>
             </div>
         </>
     );
