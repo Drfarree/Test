@@ -7,12 +7,106 @@ import { Network } from "../components/Buttons/Network";
 import SwapButton from "../components/Buttons/SwapButton";
 
 
+
+
+
 const Navigation = () => {
   const location = useLocation();
   const isServices = location.pathname.includes("/services");
 
+  const generateMainNavLinks = () => {
+    const HeaderNavigationLinks = [
+      {
+        title: "Inicio",
+        url: "/"
+      },
+      {
+        title: "Información",
+        url: "/information"
+      },
+      {
+        title: "Dashboard",
+        url: "/dashboard"
+      }
+    ]
+    return (
+      //Loop HeaderNavigationLinks and create one NavLink each element on the array
+      HeaderNavigationLinks.map((values, index) => (
+        <NavLink key={index} to={values.url} className={({ isActive }) =>
+          isActive
+            ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4 uppercase"
+            : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00] uppercase"
+        }
+        >
+          {values.title}
+        </NavLink>
+      ))
+    )
+  }
+
+  const generateDropdawnNavLinks = () => {
+    const DropdawnHeaderNavigationLinks = [
+      {
+        title: "Training",
+        url: "/services/training"
+      },
+      {
+        title: "Inference",
+        url: "/services/inference"
+      },
+      {
+        title: "Mdk",
+        url: "/services/mdk"
+      }
+    ]
+
+    return (
+      <div className="dropdown inline-block relative">
+        <button
+          className={
+            isServices
+              ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4 "
+              : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00] inline-flex md:hover:text-[#ffff00]"
+          }
+        >
+          <span className="uppercase">
+            Servicios
+          </span>
+          <svg
+            className="fill-current h-5 w-5 mt-[2px]"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+          >
+            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />{" "}
+          </svg>
+        </button>
+        <ul className="dropdown-menu absolute hidden pt-1 bg-transparent">
+          {
+            //Loop HeaderNavigationLinks and create one NavLink each element on the array
+            DropdawnHeaderNavigationLinks.map((values, index) => (
+              <li className="mt-3">
+                <NavLink
+                  to={values.url}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4"
+                      : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00]"
+                  }
+                >
+                  <span className="uppercase">
+                    {values.title}
+                  </span>
+                </NavLink>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    )
+  }
+
   return (
-    <section className="w-full px-8 text-gray-700 bg-white" className="menu-bg">
+    <section className="w-full px-8 text-gray-700 bg-white menu-bg">
       <div className="container flex flex-col flex-wrap items-center justify-between py-3 mx-auto md:flex-row max-w-full">
         <div className="relative flex flex-col md:flex-row ml-10">
           <a
@@ -20,143 +114,20 @@ const Navigation = () => {
             className="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0"
           >
             <img src={logo} width="51px" height="54px" />
-
             <span className="text-4xl select-none text-white ml-5">
-              FED AI<span className="text-indigo-600">.</span>
+              FED AI
+              <span className="text-indigo-600">.</span>
             </span>
           </a>
 
-          {/* <a
-          className="group text-pink-500 transition-all duration-300 ease-in-out"
-          href="#"
-        >
-          <span className="bg-left-bottom bg-gradient-to-r from-pink-500 to-pink-500 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
-            This text gets 'underlined' on hover
-          </span>
-        </a> 
-        <NavLink
-            to="/"
-            className={({ isActive, isPending }) =>
-              isPending ? "pending" : isActive ? "active" : ""
-            }
-            className={
-              "mr-5 font-medium leading-6 text-white-600 hover:text-yellow-200 group transition-all duration-300 ease-in-out"
-            }
-          >
-            <span className="bg-left-bottom bg-gradient-to-r from-yellow-500 to-yellow-500 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
-              INICIO
-            </span>
-          </NavLink>
-        */}
-
           <nav className="flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8 md:border-gray-200">
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                isActive
-                  ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4"
-                  : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00]"
-              }
-            >
-              INICIO
-            </NavLink>
-
-            {/* <NavLink
-            to="/services"
-            className={({ isActive }) =>
-              isActive
-                ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4"
-                : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00]"
+            {
+              generateMainNavLinks()
             }
-          >
-            SERVICIOS
-          </NavLink> */}
-            <NavLink
-              to="/information"
-              className={({ isActive }) =>
-                isActive
-                  ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4"
-                  : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00]"
-              }
-            >
-              INFORMACIÓN
-            </NavLink>
-            <NavLink
-              to="/dashborad"
-              className={({ isActive }) =>
-                isActive
-                  ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4"
-                  : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00]"
-              }
-            >
-              Dashborad
-            </NavLink>
-            {/* <div className="p-10"> */}
-            <div className="dropdown inline-block relative">
-              <button
-                className={
-                  isServices
-                    ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4 inline-flex"
-                    : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00] inline-flex md:hover:text-[#ffff00]"
-                }
-              >
-                <span
-                  className={
-                    isServices
-                      ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4"
-                      : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00] "
-                  }
-                >
-                  SERVICIOS
-                </span>
-                <svg
-                  className="fill-current h-5 w-5 mt-[2px] -ml-3"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />{" "}
-                </svg>
-              </button>
-              <ul className="dropdown-menu absolute hidden pt-1 bg-transparent">
-                <li className="mt-3">
-                  <NavLink
-                    to="/services/training"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4"
-                        : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00]"
-                    }
-                  >
-                    TRAINING
-                  </NavLink>
-                </li>
-                <li className="mt-3">
-                  <NavLink
-                    to="/services/inference"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4"
-                        : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00]"
-                    }
-                  >
-                    INFERENCE
-                  </NavLink>
-                </li>
-                <li className="mt-3">
-                  <NavLink
-                    to="/services/mdk"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4"
-                        : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00]"
-                    }
-                  >
-                    MDK
-                  </NavLink>
-                </li>
-              </ul>
-            </div>
-            {/* </div> */}
+
+            {
+              generateDropdawnNavLinks()
+            }
           </nav>
         </div>
 
