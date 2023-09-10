@@ -1,10 +1,17 @@
 import React, { useState } from "react";
+import { depositNodeManager } from "../../utils/WalletUtils";
 
 export default function MyCard({ item }) {
   const { price, currency, image, name, description } = item;
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSucess] = useState(null);
 
   const handleBuy = () => {
-    console.log("Buy Now: ", price, name)
+    depositNodeManager(price).then(() => {
+
+    }).catch(() => {
+
+    })
   }
 
   return (
@@ -18,8 +25,8 @@ export default function MyCard({ item }) {
             <img
               src={image}
               className="object-cover object-center m-auto rounded-lg"
-              //   width={200}
-              //   height={200}
+            //   width={200}
+            //   height={200}
             />
           </div>
           <div className="prod-title">

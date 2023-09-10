@@ -3,18 +3,30 @@ import MyCard from "../../components/Card/MyCard.jsx";
 
 import Fraud from "../../assets/fraud.jpeg";
 
-
+//TODO: BBDD
 const data = [
   {
     name: "Fraud Prevention",
     image: Fraud,
     description: "description",
-    price: 0.0065,
-    currency: "BTC"
-  }
+    price: 10,
+    currency: "PK",
+    total_inference: 10,
+    projectId: 1
+  },
+  {
+    name: "Fraud Prevention",
+    image: Fraud,
+    description: "description",
+    price: 100,
+    currency: "PK",
+    total_inference: 10,
+    projectId: 2
+  },
 ];
+//TODO: Que cargue cuando se realizan las llamadas
 
-export default function Training() {
+export default function Inference() {
   return (
     <>
       <div className="container mx-auto">

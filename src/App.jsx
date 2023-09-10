@@ -10,6 +10,7 @@ import Information from "./pages/Information/Information";
 import Mdk from "./pages/MDK/Mdk";
 import Training from "./pages/Services/Training";
 import DashboradPage from "./pages/Dashboard/DashboardPage";
+import Inference from "./pages/Services/Inference";
 
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
             <Route path="/information" element={<Information />} />
             <Route path="/services/training" element={<Training />} />
             <Route path="/dashborad" element={<DashboradPage />} />
-            <Route path="/services/inference" element={<Information />} />
+            <Route path="/services/inference" element={<Inference />} />
             <Route path="/services/mdk" element={<Mdk />} />
           </Route>
         </Routes>

@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Input, Modal, message } from "antd";
+import { Input, Modal, message, FloatButton } from "antd";
 import {
     ArrowDownOutlined,
     DownOutlined,
+    SwapOutlined
 } from "@ant-design/icons";
-import axios from "axios";
-// import { useSendTransaction, useWaitForTransaction } from "wagmi";
-import { getWalletAddress } from "../../utils/WalletUtils";
+import { getWalletAddress, getTokenPrice, approveTokens, SwapETHforTokens } from "../../utils/WalletUtils";
+import { ErrorHandler } from "../../utils/ErrorsHandler";
 
 const tokenList = [{
     "ticker": "ETH",
     "img": "https://cdn.moralis.io/eth/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
     "name": "USD Coin",
     "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
-    "decimals": 6
+    "decimals": 18
 },
 {
     "ticker": "Token",
@@ -24,53 +24,70 @@ const tokenList = [{
 }]
 
 function SwapComponent(props) {
+    // Mensajes
     const [messageApi, contextHolder] = message.useMessage();
-    const [slippage, setSlippage] = useState(2.5);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSuccess, setIsSucess] = useState(null);
+    // Wallet address
     const [walletAddress, setWalletAddress] = useState();
-    const [tokenOneAmount, setTokenOneAmount] = useState(null);
-    const [tokenTwoAmount, setTokenTwoAmount] = useState(null);
+    // Tokens
+    const [tokenFromAmount, setTokenFrom] = useState(null);
+    const [tokenToAmount, setTokenTo] = useState(null);
     const [tokenOne, setTokenOne] = useState(tokenList[0]);
     const [tokenTwo, setTokenTwo] = useState(tokenList[1]);
+    // Show modal managment
+    const [isSelectTokenModalOpen, setIsSelectTokenModalOpen] = useState(false);
     const [isSwapTokenModalOpen, setSwapTokenModalOpen] = useState(false);
+    // Change token
     const [changeToken, setChangeToken] = useState(1);
+    // Token price
     const [prices, setPrices] = useState(null);
-    const [txDetails, setTxDetails] = useState({
-        to: null,
-        data: null,
-        value: null,
-    });
-    let isWalletConnected = false;
 
-    // const { data, sendTransaction } = useSendTransaction({
-    //     request: {
-    //         from: address,
-    //         to: String(txDetails.to),
-    //         data: String(txDetails.data),
-    //         value: String(txDetails.value),
-    //     }
-    // })
+    // Open Swap Component Modal
+    const showModal = () => {
+        // Comprobar que la Wallet está conectada y además no tiene request pendientes
+        getWalletAddress().then(
+            walletAddress => {
+                fetchPrices()
+                setWalletAddress(walletAddress)
+                setIsSelectTokenModalOpen(true)
+            }
+        ).catch(error => {
+            const newError = ErrorHandler(error)
+            messageApi.open({
+                type: 'warning',
+                content: newError.message,
+                duration: 0,
+            })
+        }
+        )
+    };
 
-    // const { isLoading, isSuccess } = useWaitForTransaction({
-    // hash: data?.hash,
-    // })
+    const handleOk = () => {
+        setIsSelectTokenModalOpen(false);
+    };
 
-    // function handleSlippageChange(e) {
-    //     setSlippage(e.target.value);
-    // }
+    const handleCancel = () => {
+        setIsSelectTokenModalOpen(false);
+    };
+
 
     function changeAmount(e) {
-        setTokenOneAmount(e.target.value);
-        if (e.target.value && prices) {
-            setTokenTwoAmount((e.target.value * prices.ratio).toFixed(8))
-        } else {
-            setTokenTwoAmount(null);
-        }
+        setTokenFrom(e.target.value);
+        const ethByToken = (prices.ratio / (10 ** 9))
+        //TODO: Cambiar
+        if (e.target.value && prices)
+            if (tokenOne.address === tokenList[0].address)
+                setTokenTo(parseInt(e.target.value / ethByToken))
+            else
+                setTokenTo(e.target.value * ethByToken)
+
     }
 
     function switchTokens() {
         setPrices(null);
-        setTokenOneAmount(null);
-        setTokenTwoAmount(null);
+        setTokenFrom(null);
+        setTokenTo(null);
         const one = tokenOne;
         const two = tokenTwo;
         setTokenOne(two);
@@ -85,8 +102,8 @@ function SwapComponent(props) {
 
     function modifyToken(i) {
         setPrices(null);
-        setTokenOneAmount(null);
-        setTokenTwoAmount(null);
+        setTokenFrom(null);
+        setTokenTo(null);
         if (changeToken === 1) {
             setTokenOne(tokenList[i]);
             fetchPrices(tokenList[i].address, tokenTwo.address)
@@ -97,95 +114,93 @@ function SwapComponent(props) {
         setSwapTokenModalOpen(false);
     }
 
-    async function fetchPrices(one, two) {
-        //TODO: Change call
-        // const res = await axios.get(`http://localhost:3001/tokenPrice`, {
-        //     params: { addressOne: one, addressTwo: two }
-        // })
+    const fetchPrices = async () => {
+        if (walletAddress)
+            getTokenPrice().then(
+                tokenPrice => {
+                    setPrices({ ratio: tokenPrice })
+                }
+            ).catch((error) => {
 
-        // TODO: Change 
-        // setPrices(res.data)
-        setPrices({ ratio: 0.001 })
+            })
     }
 
-    async function fetchDexSwap() {
-
-        const allowance = await axios.get(`https://api.1inch.io/v5.0/1/approve/allowance?tokenAddress=${tokenOne.address}&walletAddress=${walletAddress}`)
-
-        if (allowance.data.allowance === "0") {
-
-            const approve = await axios.get(`https://api.1inch.io/v5.0/1/approve/transaction?tokenAddress=${tokenOne.address}`)
-
-            setTxDetails(approve.data);
-            console.log("not approved")
-            return
-
+    const fetchDexSwap = async () => {
+        setIsLoading(true)
+        setIsSelectTokenModalOpen(false)
+        const fnCallbackSucess = () => {
+            messageApi.open({
+                type: 'success',
+                content: 'OK'
+            })
+            setIsLoading(false)
+            setIsSucess(true)
         }
 
-        const tx = await axios.get(
-            `https://api.1inch.io/v5.0/1/swap?fromTokenAddress=${tokenOne.address}&toTokenAddress=${tokenTwo.address}&amount=${tokenOneAmount.padEnd(tokenOne.decimals + tokenOneAmount.length, '0')}&fromAddress=${walletAddress}&slippage=${slippage}`
-        )
+        const fnCallbackError = () => {
+            setIsLoading(false)
+            setIsSucess(false)
+        }
 
-        let decimals = Number(`1E${tokenTwo.decimals}`)
-        setTokenTwoAmount((Number(tx.data.toTokenAmount) / decimals).toFixed(2));
+        let fnToCall = undefined;
 
-        setTxDetails(tx.data.tx);
+        if (tokenOne.address === tokenList[0].address)
+            fnToCall = SwapETHforTokens
+        else
+            fnToCall = approveTokens
+
+        fnToCall(tokenFromAmount).then(() => fnCallbackSucess()).catch(() => fnCallbackError())
 
     }
 
     useEffect(() => {
-        const address = getWalletAddress()
-        if (address) {
-            setWalletAddress(address)
-            isWalletConnected = true;
-        }
+        // Set up an interval to fetch data every 10 seconds
+        const intervalId = setInterval(() => {
+            fetchPrices();
+        }, 1000);
 
+        // Clear the interval when the component unmounts to prevent memory leaks
+        return () => clearInterval(intervalId);
     }, [])
 
 
     useEffect(() => {
-        fetchPrices(tokenList[0].address, tokenList[1].address)
-    }, [])
+        if (!isSelectTokenModalOpen) {
+            setTokenFrom(null)
+            setTokenTo(null)
+        }
+    }, [isSelectTokenModalOpen])
 
     useEffect(() => {
-
-        if (txDetails.to && isWalletConnected) {
-            sendTransaction();
+        messageApi.destroy();
+        if (isLoading) {
+            messageApi.open({
+                type: 'loading',
+                content: 'Transaction is Pending...',
+                duration: 0,
+            })
         }
-    }, [txDetails])
 
-    // useEffect(() => {
+    }, [isLoading])
 
-    //     messageApi.destroy();
+    useEffect(() => {
+        messageApi.destroy();
+        if (isSuccess) {
+            messageApi.open({
+                type: 'success',
+                content: 'Transaction Successful',
+                duration: 1.5,
+            })
+        } else {
+            //TODO: 
+            messageApi.open({
+                type: 'error',
+                content: 'Transaction Failed',
+                duration: 1.50,
+            })
+        }
+    }, [isSuccess])
 
-    //     if (isLoading) {
-    //         messageApi.open({
-    //             type: 'loading',
-    //             content: 'Transaction is Pending...',
-    //             duration: 0,
-    //         })
-    //     }
-
-    // }, [isLoading])
-
-    // useEffect(() => {
-    //     messageApi.destroy();
-    //     if (isSuccess) {
-    //         messageApi.open({
-    //             type: 'success',
-    //             content: 'Transaction Successful',
-    //             duration: 1.5,
-    //         })
-    //     } else if (txDetails.to) {
-    //         messageApi.open({
-    //             type: 'error',
-    //             content: 'Transaction Failed',
-    //             duration: 1.50,
-    //         })
-    //     }
-
-
-    // }, [isSuccess])
 
     const SwapTokenModal = (
         <Modal
@@ -214,39 +229,44 @@ function SwapComponent(props) {
         </Modal>
     )
 
+
+
     return (
+
         <>
-            {contextHolder}
-            {SwapTokenModal}
-            <div className="flex flex-col justify-start items-start pl-[30px] pr-[30px]">
-                <h1 className="m-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white uppercase"><span className="text-[35px] font-[650]">S</span>wap</h1>
-                <div className="relative">
-                    <Input
-                        placeholder="0"
-                        value={tokenOneAmount}
-                        onChange={changeAmount}
-                        disabled={!prices}
-                    />
-                    <Input placeholder="0" value={tokenTwoAmount} />
-                    <div className="bg-[#3a4157] w-[35px] h-[35px] items-center justify-center flex rounded-[8px] absolute top-[80px] left-[45%] text-[#5F6783] border-[3px] border-solid  border-[#0E111B] text-[18px] duration-[0.3s] hover:text-white hover:cursor-pointer" onClick={switchTokens}>
-                        <ArrowDownOutlined className=" switchArrow" />
+            <FloatButton icon={<SwapOutlined />} type="primary" tooltip={<div>Swap tokens</div>} onClick={showModal} />
+            <Modal open={isSelectTokenModalOpen} onCancel={handleCancel} onOk={handleOk} footer={null} closeIcon={null}>
+                {contextHolder}
+                {SwapTokenModal}
+                <div className="flex flex-col justify-start items-start pl-[30px] pr-[30px]">
+                    <h1 className="m-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white uppercase"><span className="text-[35px] font-[650]">S</span>wap</h1>
+                    <div className="relative">
+                        <Input
+                            placeholder="0"
+                            value={tokenFromAmount}
+                            onChange={changeAmount}
+                        />
+                        <Input placeholder="0" value={tokenToAmount} />
+                        <div className="bg-[#3a4157] w-[35px] h-[35px] items-center justify-center flex rounded-[8px] absolute top-[80px] left-[45%] text-[#5F6783] border-[3px] border-solid  border-[#0E111B] text-[18px] duration-[0.3s] hover:text-white hover:cursor-pointer" onClick={switchTokens}>
+                            <ArrowDownOutlined className=" switchArrow" />
+                        </div>
+                        <div className="swapAsset top-[36px] right-[20px]" onClick={() => openModal(1)}>
+                            <img src={tokenOne.img} alt="assetOneLogo" className="h-[22px]  ml-[5px]" />
+                            {tokenOne.ticker}
+                            <DownOutlined />
+                        </div>
+                        <div className="swapAsset top-[135px] right-[20px]" onClick={() => openModal(2)}>
+                            <img src={tokenTwo.img} alt="assetOneLogo" className="h-[22px]  ml-[5px]" />
+                            {tokenTwo.ticker}
+                            <DownOutlined />
+                        </div>
                     </div>
-                    <div className="swapAsset top-[36px] right-[20px]" onClick={() => openModal(1)}>
-                        <img src={tokenOne.img} alt="assetOneLogo" className="h-[22px]  ml-[5px]" />
-                        {tokenOne.ticker}
-                        <DownOutlined />
-                    </div>
-                    <div className="swapAsset top-[135px] right-[20px]" onClick={() => openModal(2)}>
-                        <img src={tokenTwo.img} alt="assetOneLogo" className="h-[22px]  ml-[5px]" />
-                        {tokenTwo.ticker}
-                        <DownOutlined />
-                    </div>
+                    <div
+                        className="swapButton"
+                        disabled={!tokenFromAmount}
+                        onClick={fetchDexSwap}>Swap</div>
                 </div>
-                <div
-                    className="swapButton"
-                    disabled={!tokenOneAmount || !isWalletConnected}
-                    onClick={fetchDexSwap}>Swap</div>
-            </div>
+            </Modal>
         </>
     );
 }

@@ -4,8 +4,8 @@ import logo from "../assets/logo.png";
 import "./styles.css";
 import Connect from "../components/Buttons/Connect";
 import { Network } from "../components/Buttons/Network";
-import SwapButton from "../components/Buttons/SwapButton";
-
+import PriceInfoComponent from "../components/CurrentWalletBalance/CurrentWalletBalance";
+import SwapComponent from "../components/SwapComponent/SwapComponent";
 
 
 
@@ -86,6 +86,7 @@ const Navigation = () => {
             DropdawnHeaderNavigationLinks.map((values, index) => (
               <li className="mt-3">
                 <NavLink
+                  key={index}
                   to={values.url}
                   className={({ isActive }) =>
                     isActive
@@ -132,6 +133,7 @@ const Navigation = () => {
         </div>
 
         <div className="inline-flex items-center ml-5 space-x-6 lg:justify-end">
+          <PriceInfoComponent />
           <Network />
           <Connect />
         </div>
@@ -276,7 +278,7 @@ const Footer = () => (
 export const Layout = () => (
   <>
 
-    <SwapButton />
+    <SwapComponent />
 
     <Navigation />
 
