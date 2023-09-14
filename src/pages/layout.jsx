@@ -7,9 +7,6 @@ import { Network } from "../components/Buttons/Network";
 import PriceInfoComponent from "../components/CurrentWalletBalance/CurrentWalletBalance";
 import SwapComponent from "../components/SwapComponent/SwapComponent";
 
-
-
-
 const Navigation = () => {
   const location = useLocation();
   const isServices = location.pathname.includes("/services");
@@ -18,47 +15,50 @@ const Navigation = () => {
     const HeaderNavigationLinks = [
       {
         title: "Inicio",
-        url: "/"
+        url: "/",
       },
       {
         title: "Información",
-        url: "/information"
+        url: "/information",
       },
       {
         title: "Dashboard",
-        url: "/dashboard"
-      }
-    ]
+        url: "/dashboard",
+      },
+    ];
     return (
       //Loop HeaderNavigationLinks and create one NavLink each element on the array
       HeaderNavigationLinks.map((values, index) => (
-        <NavLink key={index} to={values.url} className={({ isActive }) =>
-          isActive
-            ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4 uppercase"
-            : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00] uppercase"
-        }
+        <NavLink
+          key={index}
+          to={values.url}
+          className={({ isActive }) =>
+            isActive
+              ? "mr-5 font-medium leading-6 text-[#ffff00] hover:text-[#ffff00] decoration-{#ffff00} underline underline-offset-8 decoration-4 uppercase"
+              : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00] uppercase"
+          }
         >
           {values.title}
         </NavLink>
       ))
-    )
-  }
+    );
+  };
 
   const generateDropdawnNavLinks = () => {
     const DropdawnHeaderNavigationLinks = [
       {
         title: "Training",
-        url: "/services/training"
+        url: "/services/training",
       },
       {
         title: "Inference",
-        url: "/services/inference"
+        url: "/services/inference",
       },
       {
         title: "Mdk",
-        url: "/services/mdk"
-      }
-    ]
+        url: "/services/mdk",
+      },
+    ];
 
     return (
       <div className="dropdown inline-block relative">
@@ -69,11 +69,9 @@ const Navigation = () => {
               : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00] inline-flex md:hover:text-[#ffff00]"
           }
         >
-          <span className="uppercase">
-            Servicios
-          </span>
+          <span className="uppercase">Servicios</span>
           <svg
-            className="fill-current h-5 w-5 mt-[2px]"
+            className="fill-current h-5 w-5 mt-[2px] absolute right-0 top-0 "
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
           >
@@ -94,27 +92,27 @@ const Navigation = () => {
                       : "mr-5 font-medium leading-6 text-white hover:text-[#ffff00]"
                   }
                 >
-                  <span className="uppercase">
-                    {values.title}
-                  </span>
+                  <span className="uppercase">{values.title}</span>
                 </NavLink>
               </li>
             ))
           }
         </ul>
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <section className="w-full px-8 text-gray-700 bg-white menu-bg">
       <div className="container flex flex-col flex-wrap items-center justify-between py-3 mx-auto md:flex-row max-w-full">
         <div className="relative flex flex-col md:flex-row ml-10">
           <a
-            href="#"
+            href="/"
             className="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0"
           >
-            <img src={logo} width="51px" height="54px" />
+            <NavLink to="/">
+              <img src={logo} width="51px" height="54px" />
+            </NavLink>
             <span className="text-4xl select-none text-white ml-5">
               FED AI
               <span className="text-indigo-600">.</span>
@@ -122,13 +120,9 @@ const Navigation = () => {
           </a>
 
           <nav className="flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8 md:border-gray-200">
-            {
-              generateMainNavLinks()
-            }
+            {generateMainNavLinks()}
 
-            {
-              generateDropdawnNavLinks()
-            }
+            {generateDropdawnNavLinks()}
           </nav>
         </div>
 
@@ -277,7 +271,6 @@ const Footer = () => (
 
 export const Layout = () => (
   <>
-
     <SwapComponent />
 
     <Navigation />

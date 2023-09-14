@@ -23,7 +23,7 @@ function App() {
             <Route path="/services" element={<Services />} />
             <Route path="/information" element={<Information />} />
             <Route path="/services/training" element={<Training />} />
-            <Route path="/dashborad" element={<DashboradPage />} />
+            <Route path="/dashboard" element={<DashboradPage />} />
             <Route path="/services/inference" element={<Inference />} />
             <Route path="/services/mdk" element={<Mdk />} />
           </Route>
