@@ -9,7 +9,7 @@ function CurrentWalletBalance(props) {
 
     const handleWallet = async () => {
         const walletBalance = getWalletBalance()
-        return walletBalance;
+        return (await walletBalance).toFixed(2);
     };
 
 

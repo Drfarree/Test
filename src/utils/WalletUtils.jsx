@@ -17,8 +17,6 @@ const getWalletProvider = async () => {
 }
 
 
-
-
 // PÚBLICAS
 const getWalletAddress = async () => {
     const provider = await getWalletProvider();
@@ -58,13 +56,13 @@ const getWalletBalance = async () => {
     const decimals = await getDecimals()
     const totalBalance = (tokenBalance)/10**(decimals)
 
-    return totalBalance.toString()
+    return totalBalance
 }
 
 const getTokenPrice = async () => {
     const provider = await getWalletProvider()
 
-    const tokenContractAddress = "LIQUIDITY_POOL_CONTRACT_ADDRESS";
+    const tokenContractAddress = LIQUIDITY_POOL_CONTRACT_ADDRESS;
     const tokenContractAbi = ["function getTokenPrice() view returns (uint256)"];
 
     const tokenContract = new ethers.Contract(tokenContractAddress, tokenContractAbi, provider);
@@ -72,23 +70,24 @@ const getTokenPrice = async () => {
     return tokenPrice;
 };
 
-const approveTokens = async (token_amount) => {
+const approveAndSwapTokens = async (token_amount) => {
     try {
 
         const provider = await getWalletProvider()
 
         const signer = provider.getSigner()
+        const decimals = await getDecimals()
         const contract = new ethers.Contract(TOKEN_CONTRACT_ADDRESS, TokenABI, signer)
 
 
-        const result = await contract.approve(LIQUIDITY_POOL_CONTRACT_ADDRESS, token_amount)
+        const result = await contract.approve(LIQUIDITY_POOL_CONTRACT_ADDRESS, BigInt(token_amount)*BigInt(10)**BigInt(decimals))
 
         await result.wait()
 
         const contractLP = new ethers.Contract(LIQUIDITY_POOL_CONTRACT_ADDRESS, LiquidityPoolABI, signer)
 
 
-        const resultLP = await contractLP.swapTokensForETH(token_amount)
+        const resultLP = await contractLP.swapTokensForETH(BigInt(token_amount)*BigInt(10)**BigInt(decimals))
 
         await resultLP.wait()
     } catch (error) {
@@ -119,10 +118,11 @@ const swapTokensForETH = async (token_amount) => {
         const provider = await getWalletProvider()
 
         const signer = provider.getSigner()
+        const decimals = await getDecimals()
 
         const contract = new ethers.Contract(LIQUIDITY_POOL_CONTRACT_ADDRESS, LiquidityPoolABI, signer)
 
-        const result = await contract.swapTokensForETH(token_amount*10**getDecimals())
+        const result = await contract.swapTokensForETH(parseInt(token_amount*10**decimals))
 
         await result.wait()
 
@@ -158,4 +158,4 @@ const depositNodeManager = async (token_amount) => {
 
 
 
-export { getWalletAddress, getWalletBalance, getTokenPrice, approveTokens, SwapETHforTokens, depositNodeManager, getDecimals, swapTokensForETH };
+export { getWalletAddress, getWalletBalance, getTokenPrice, approveAndSwapTokens, SwapETHforTokens, depositNodeManager, getDecimals, swapTokensForETH };
