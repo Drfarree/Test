@@ -5,7 +5,7 @@ import {
     DownOutlined,
     SwapOutlined
 } from "@ant-design/icons";
-import { getWalletAddress, getTokenPrice, approveTokens, SwapETHforTokens } from "../../utils/WalletUtils";
+import { getWalletAddress, getTokenPrice, approveTokens, SwapETHforTokens, getDecimals } from "../../utils/WalletUtils";
 import { ErrorHandler } from "../../utils/ErrorsHandler";
 
 const tokenList = [{

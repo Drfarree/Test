@@ -4,9 +4,10 @@ import LiquidityPoolABI from '../ABIS/LiquidityPoolABI.json'
 import NodeManagerABI from '../ABIS/NodeManagerABI.json'
 
 
-const TOKEN_CONTRACT_ADDRESS = "0x8a0d6FF3C82f6278584A7fEFAf455b4c9D4b5817"
-const LIQUIDITY_POOL_CONTRACT_ADDRESS = '0xa1E5D63e967eE13afA9E6eB6Cf6A5B6962c2E17c'
-const NODE_MANAGER_CONTRACT_ADDRESS = '0x26b45F01AD51bf522135B65Cf8742D94141749Dd'
+const TOKEN_CONTRACT_ADDRESS = "0x5fB17bc2C2DDB36FD62D9eC51fB7D9EdaB2b09e7"
+const LIQUIDITY_POOL_CONTRACT_ADDRESS = '0x2D202Ea971a2F73b40c9668d1D906D6D47776247'
+const NODE_MANAGER_CONTRACT_ADDRESS = '0x6c935331e47F2267cab239467F1a8154dA56bc9e'
+const WHITELIST_CONTRACT_ADDRESS = '0x2EBF10d47F06bfF5861e84fB6B52b53547D1A32F'
 
 // PRIVADAS
 const getWalletProvider = async () => {
@@ -26,25 +27,44 @@ const getWalletAddress = async () => {
     return address;
 }
 
+const getDecimals = async () => {
+    const walletAddress = await getWalletAddress()
+    const provider = await getWalletProvider()
 
+    // direccion del contrato token 
+    const tokenContractAddress = TOKEN_CONTRACT_ADDRESS;
+    const tokenContractAbi = ["function decimals() view returns (uint8)"];
+
+    const tokenContract = new ethers.Contract(tokenContractAddress, tokenContractAbi, provider);
+    const tokenDecimals = await tokenContract.decimals();
+
+    return tokenDecimals
+
+}
+
+// TODO: Truncar/redondear  3 decimals ?¿
 const getWalletBalance = async () => {
     const walletAddress = await getWalletAddress()
     const provider = await getWalletProvider()
 
     // direccion del contrato token 
-    const tokenContractAddress = "0x8a0d6FF3C82f6278584A7fEFAf455b4c9D4b5817";
+    const tokenContractAddress = TOKEN_CONTRACT_ADDRESS;
     // Abi de la funcion balanceOf para mostrar balance
     const tokenContractAbi = ["function balanceOf(address) view returns (uint256)"];
 
     const tokenContract = new ethers.Contract(tokenContractAddress, tokenContractAbi, provider);
     const tokenBalance = await tokenContract.balanceOf(walletAddress);
-    return tokenBalance.toString()
+
+    const decimals = await getDecimals()
+    const totalBalance = (tokenBalance)/10**(decimals)
+
+    return totalBalance.toString()
 }
 
 const getTokenPrice = async () => {
     const provider = await getWalletProvider()
 
-    const tokenContractAddress = "0xa1E5D63e967eE13afA9E6eB6Cf6A5B6962c2E17c";
+    const tokenContractAddress = "LIQUIDITY_POOL_CONTRACT_ADDRESS";
     const tokenContractAbi = ["function getTokenPrice() view returns (uint256)"];
 
     const tokenContract = new ethers.Contract(tokenContractAddress, tokenContractAbi, provider);
@@ -93,6 +113,25 @@ const SwapETHforTokens = async (eth_amount) => {
     }
 }
 
+const swapTokensForETH = async (token_amount) => {
+
+    try {
+        const provider = await getWalletProvider()
+
+        const signer = provider.getSigner()
+
+        const contract = new ethers.Contract(LIQUIDITY_POOL_CONTRACT_ADDRESS, LiquidityPoolABI, signer)
+
+        const result = await contract.swapTokensForETH(token_amount*10**getDecimals())
+
+        await result.wait()
+
+    } catch (error) {
+        console.error("Failed approve", error)
+    }
+
+}
+
 const depositNodeManager = async (token_amount) => {
     try {
         const provider = await getWalletProvider()
@@ -119,4 +158,4 @@ const depositNodeManager = async (token_amount) => {
 
 
 
-export { getWalletAddress, getWalletBalance, getTokenPrice, approveTokens, SwapETHforTokens, depositNodeManager };
+export { getWalletAddress, getWalletBalance, getTokenPrice, approveTokens, SwapETHforTokens, depositNodeManager, getDecimals, swapTokensForETH };
